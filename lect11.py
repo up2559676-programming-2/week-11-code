@@ -1,6 +1,5 @@
 class Pizza:
-
-    valid_toppings = {'cheese', 'pepperoni', 'mushrooms', 'olives'}
+    valid_toppings = {"cheese", "pepperoni", "mushrooms", "olives"}
 
     def __init__(self, size):
         self.size = size
@@ -22,7 +21,6 @@ class Pizza:
 
 
 class StuffedCrustPizza(Pizza):
-
     def __init__(self, size, crust):
         super().__init__(size)
         self._crust = crust
@@ -33,7 +31,7 @@ class StuffedCrustPizza(Pizza):
 
     @crust.setter
     def crust(self, new_crust):
-        if new_crust in {'mozzarella', 'hot dog'}:
+        if new_crust in {"mozzarella", "hot dog"}:
             self._crust = new_crust
 
     def __str__(self):
@@ -45,7 +43,6 @@ class StuffedCrustPizza(Pizza):
 
 
 class PizzaOrder:
-
     def __init__(self):
         self.pizzas = []
 
@@ -82,8 +79,8 @@ def test_stuffed_crust_pizza():
     pizza.size = "medium"
     pizza.add_topping("cheese")
     pizza.add_topping("pepperoni")
-    pizza.crust = 'hot dog'
-    pizza.crust = 'cheddar'  # should not change the crust
+    pizza.crust = "hot dog"
+    pizza.crust = "cheddar"  # should not change the crust
 
     print(pizza)
 
@@ -99,7 +96,7 @@ def test_pizza_order():
     pizza2 = StuffedCrustPizza("medium", "mozzarella")
     pizza2.add_topping("cheese")
     pizza2.add_topping("mushrooms")
-    pizza2.crust = 'mozzarella'
+    pizza2.crust = "mozzarella"
     order.add_pizza(pizza2)
 
     print(order)

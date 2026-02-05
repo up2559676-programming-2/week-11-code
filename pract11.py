@@ -1,25 +1,31 @@
 class Laptop:
+    ram_options = {4: 0, 8: 50, 16: 100, 32: 200}
 
-    ram_options = {
-        4: 0,
-        8: 50,
-        16: 100,
-        32: 200
-    }
+    ssd_options: dict[int, int] = {256: 0, 512: 30, 1024: 100}
 
-    def __init__(self, brand, base_price):
+    def __init__(self, brand: str, base_price: float):
         self.brand = brand
         self.base_price = base_price
-        self._ram = 4
+        self._ram: int = 4
+        self._ssd: int = self.ssd_options[0]
 
     @property
     def ram(self):
         return self._ram
 
     @ram.setter
-    def ram(self, new_ram):
+    def ram(self, new_ram: int):
         if new_ram in self.ram_options:  # Use class variable
             self._ram = new_ram
+
+    @property
+    def ssd(self):
+        return self._ssd
+
+    @ssd.setter
+    def ssd(self, new_ssd: int):
+        if new_ssd in self.ssd_options:
+            self._ssd = new_ssd
 
     def calculate_price(self):
         ram_price = self.ram_options[self.ram]
@@ -27,18 +33,17 @@ class Laptop:
         return total_price
 
     def __str__(self):
-        output = f"{self.brand} Laptop with {self.ram} GB RAM"
+        output = f"{self.brand} Laptop with {self.ram} GB RAM and {self.ssd} GB storage"
         output += f" priced at £{self.calculate_price()}"
         return output
-    
+
 
 class ShoppingCart:
-
     def __init__(self):
-        self.laptops = []
+        self.laptops: list[Laptop] = []
         self.total = 0
 
-    def add_laptop(self, laptop):
+    def add_laptop(self, laptop: Laptop):
         self.laptops.append(laptop)
         laptop_price = laptop.calculate_price()
         self.total += laptop_price
@@ -52,24 +57,23 @@ class ShoppingCart:
 
 
 class GamingLaptop(Laptop):
-
     gpu_options = {
         "NVIDIA GTX 1650": 0,
         "NVIDIA RTX 3070": 250,
         "NVIDIA RTX 4080": 350,
-        "AMD RX 6800M": 280
+        "AMD RX 6800M": 280,
     }
 
-    def __init__(self, brand, base_price):
+    def __init__(self, brand: str, base_price: float):
         super().__init__(brand, base_price)
-        self._gpu = "NVIDIA GTX 1650"
+        self._gpu: str = "NVIDIA GTX 1650"
 
     @property
     def gpu(self):
         return self._gpu
-    
+
     @gpu.setter
-    def gpu(self, new_gpu):
+    def gpu(self, new_gpu: str):
         if new_gpu in self.gpu_options:
             self._gpu = new_gpu
 
@@ -119,6 +123,9 @@ def test_laptop():
     laptop.ram = 99  # 'Laptop' has no attribute 'ram'
     print(f"Laptop's RAM is {laptop.ram} GB")
 
-    print(f"Laptop's price is £{laptop.calculate_price()}") # 999.99
+    print(f"Laptop's price is £{laptop.calculate_price()}")  # 999.99
 
+    print(laptop)
+
+    laptop.ssd = 1024
     print(laptop)
